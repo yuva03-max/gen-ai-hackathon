@@ -1,0 +1,13 @@
+{
+    "mcpServers": {
+        "chisaai": {
+            "transport": {
+                "type": "sse",
+                "url": "https://stormmcp.ai/gateway/c6a619fb-cc0e-4f20-869f-00b2ee49f9ae/mcp",
+                "headers": {
+                    "X-API-Key": "ag_9pe8LfMDEECXjCXDr4E5XPmIGXoEUy9pLLCx717h1WI="
+                }
+            }
+        }
+    }
+}

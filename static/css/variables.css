@@ -1,0 +1,158 @@
+:root {
+    /* Nature-Inspired Color Palette */
+    --primary-color: #4a7c59;
+    /* Sage Green */
+    --primary-dark: #3a6346;
+    --primary-light: #e8f5e9;
+
+    --secondary-color: #8d6e63;
+    /* Earthy Brown */
+    --accent-color: #81c784;
+    /* Fresh Leaf */
+
+    /* Functional Colors */
+    --bg-body: #f8f9fa;
+    --bg-surface: #ffffff;
+    --bg-sidebar: #ffffff;
+
+    --text-primary: #2c3e50;
+    --text-secondary: #6c757d;
+    --text-light: #ffffff;
+
+    --border-color: #e9ecef;
+
+    /* Status Colors */
+    --success: #2e7d32;
+    --warning: #f57f17;
+    --danger: #c62828;
+    --info: #0288d1;
+
+    /* Typography */
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    /* Spacing & Layout */
+    --sidebar-width: 280px;
+    --header-height: 70px;
+    --border-radius: 12px;
+    --border-radius-sm: 8px;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+[data-theme="dark"] {
+    --bg-body: #0d1117;
+    --bg-surface: #161b22;
+    --bg-sidebar: #0d1117;
+    --bg-card: #21262d;
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+
+    --border-color: #30363d;
+
+    --primary-light: #1b3a29;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Dark mode component overrides */
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .card,
+[data-theme="dark"] .section-container {
+    background-color: var(--bg-card) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-light {
+    background-color: var(--bg-surface) !important;
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: var(--bg-card) !important;
+}
+
+[data-theme="dark"] .border {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .message-content {
+    background-color: #2d333b;
+    color: #e6edf3;
+}
+
+[data-theme="dark"] .message.bot .message-content {
+    background-color: #2d333b;
+    color: #e6edf3;
+}
+
+[data-theme="dark"] .message.user .message-content {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+[data-theme="dark"] .input-container,
+[data-theme="dark"] .chat-input {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .chat-input::placeholder {
+    color: #8b949e;
+    opacity: 1;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .upload-zone {
+    background-color: var(--bg-card);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .tts-toggle-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .tts-toggle-btn:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+}
+
+[data-theme="dark"] pre {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .bg-soft-green {
+    background-color: #1b3a29;
+    color: #6ee7a0;
+}
+
+[data-theme="dark"] .bg-soft-blue {
+    background-color: #1a3a5c;
+    color: #58a6ff;
+}
+
+[data-theme="dark"] .bg-soft-orange {
+    background-color: #3d2c1a;
+    color: #f0883e;
+}

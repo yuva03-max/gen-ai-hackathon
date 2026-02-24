@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chisa AI - Smart Agriculture Assistant</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Marked.js for Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Custom CSS (Relative Path for Template) -->
+    <link href="/static/css/variables.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/img/logo.png">
+</head>
+
+<body>
+    <div class="app-wrapper">
+        <!-- Mobile Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header d-flex justify-content-between align-items-center">
+                <a href="#dashboard-section" class="brand-title d-flex align-items-center text-decoration-none">
+                    <img src="/static/img/logo.png" alt="Chisa AI" height="40" class="me-2 rounded-circle">
+                    <span class="fs-4 fw-bold">Chisa AI</span>
+                </a>
+                <button class="mobile-menu-btn d-lg-none" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="#dashboard-section" class="nav-link active" data-tab="dashboard-section">
+                        <i class="fas fa-chart-pie me-2"></i> <span data-i18n="nav.dashboard">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#chat-section" class="nav-link" data-tab="chat-section">
+                        <i class="fas fa-comments me-2"></i> <span data-i18n="nav.assistant">AI Assistant</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#disease-section" class="nav-link" data-tab="disease-section">
+                        <i class="fas fa-leaf me-2"></i> <span data-i18n="nav.plantVision">Plant Vision</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#soil-section" class="nav-link" data-tab="soil-section">
+                        <i class="fas fa-mountain me-2"></i> <span data-i18n="nav.soilAnalysis">Soil Analysis</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#calendar-section" class="nav-link" data-tab="calendar-section">
+                        <i class="fas fa-calendar-alt me-2"></i> <span data-i18n="nav.cropCalendar">Crop Calendar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#irrigation-section" class="nav-link" data-tab="irrigation-section">
+                        <i class="fas fa-tint me-2"></i> <span data-i18n="nav.irrigation">Irrigation</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#fertilizer-section" class="nav-link" data-tab="fertilizer-section">
+                        <i class="fas fa-seedling me-2"></i> <span data-i18n="nav.fertilizer">Natural Fertilizers</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#market-section" class="nav-link" data-tab="market-section">
+                        <i class="fas fa-shopping-basket me-2"></i> <span data-i18n="nav.market">Market Prices</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="text-secondary small">
+                    <p>&copy; 2026 Chisa AI v1.2</p>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="d-flex align-items-center">
+                    <button class="mobile-menu-btn me-3" id="open-sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div>
+                        <h2 class="h4 mb-0 fw-bold" id="page-title">Farm Overview</h2>
+                        <p class="text-secondary mb-0 small" id="current-date">Updating...</p>
+                    </div>
+                </div>
+
+                <div class="user-profile">
+                    <!-- Language Selector -->
+                    <div id="lang-selector-container" class="me-1"></div>
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="theme-toggle ms-2" title="API Settings" data-bs-toggle="modal"
+                        data-bs-target="#settingsModal">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div class="tab-content">
+                <!-- Dashboard Tab -->
+                <div class="tab-pane fade show active" id="dashboard-section">
+                    <!-- Live Status Row -->
+                    <h4 class="mb-4 fw-bold text-dark" data-i18n="dash.liveOverview">Live Overview</h4>
+                    <div class="dashboard-grid">
+                        <!-- Crop Health -->
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-wrapper bg-soft-green">
+                                    <i class="fas fa-seedling text-success"></i>
+                                </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-link text-muted p-0" type="button"><i
+                                            class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="stat-body mt-3">
+                                <h6 class="text-secondary small text-uppercase fw-bold mb-1">Crop Health</h6>
+                                <h2 class="stat-value text-dark mb-1" id="dash-health-val">94%</h2>
+                                <div class="d-flex align-items-center small" id="dash-health-trend">
+                                    <span class="badge bg-soft-green text-success rounded-pill px-2 py-1 me-2">
+                                        <i class="fas fa-arrow-up"></i> 2%
+                                    </span>
+                                    <span class="text-muted">vs last week</span>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <div class="progress rounded-pill" style="height: 8px;">
+                                    <div class="progress-bar bg-success rounded-pill" id="dash-health-bar"
+                                        role="progressbar" style="width: 94%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Weather -->
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-wrapper bg-soft-blue" id="dash-weather-icon">
+                                    <i class="fas fa-cloud-sun text-info"></i>
+                                </div>
+                            </div>
+                            <div class="stat-body mt-3">
+                                <h6 class="text-secondary small text-uppercase fw-bold mb-1">Field Cond.</h6>
+                                <h2 class="stat-value text-dark mb-1" id="dash-weather-temp">--°C</h2>
+                                <p class="text-secondary small mb-3" id="dash-weather-desc">Loading...</p>
+                                <div class="d-flex justify-content-between small text-secondary border-top pt-3">
+                                    <span id="dash-weather-humidity"><i class="fas fa-tint text-info me-1"></i>
+                                        --%</span>
+                                    <span id="dash-weather-wind"><i class="fas fa-wind text-secondary me-1"></i> --
+                                        km/h</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pest Risk -->
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-icon-wrapper bg-soft-orange">
+                                    <i class="fas fa-shield-alt text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="stat-body mt-3">
+                                <h6 class="text-secondary small text-uppercase fw-bold mb-1">Pest Risk</h6>
+                                <h2 class="stat-value text-dark mb-1" id="dash-pest-val">Low</h2>
+                                <p class="text-secondary small mb-3">Updated 10 mins ago</p>
+                                <div id="dash-pest-badge">
+                                    <span class="badge bg-soft-green text-success rounded-pill w-100 py-2">
+                                        <i class="fas fa-check-circle me-1"></i> Safe
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5-Day Forecast -->
+                    <div class="section-container mt-5">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold text-dark m-0">5-Day Forecast</h5>
+                        </div>
+                        <div class="card border-0 shadow-sm p-3">
+                            <div class="row row-cols-2 row-cols-md-5 g-0 text-center" id="forecast-container">
+                                <div class="col py-4">
+                                    <div class="spinner-border text-success spinner-border-sm" role="status"></div>
+                                    <span class="ms-2 text-muted small">Loading forecast...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions & Insights -->
+                    <div class="row mt-4 g-4">
+                        <div class="col-lg-8">
+                            <h5 class="fw-bold text-dark mb-3">Quick Actions</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="action-card d-flex align-items-center p-4 bg-white border-0 shadow-sm rounded-3 cursor-pointer hover-lift"
+                                        onclick="document.querySelector('a[href=\'#chat-section\']').click()">
+                                        <div class="action-icon bg-soft-green text-success rounded-circle p-3 me-3">
+                                            <i class="fas fa-robot fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1">Ask AI Consultant</h6>
+                                            <small class="text-secondary">Get instant farming advice</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="action-card d-flex align-items-center p-4 bg-white border-0 shadow-sm rounded-3 cursor-pointer hover-lift"
+                                        onclick="document.querySelector('a[href=\'#disease-section\']').click()">
+                                        <div class="action-icon bg-soft-blue text-primary rounded-circle p-3 me-3">
+                                            <i class="fas fa-camera fa-lg"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1">Scan for Disease</h6>
+                                            <small class="text-secondary">AI Plant Diagnosis</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <h5 class="fw-bold text-dark mb-3">Today's Insight</h5>
+                            <div
+                                class="insight-card p-4 rounded-3 text-white h-100 d-flex flex-column justify-content-center bg-gradient-success shadow-success">
+                                <div class="mb-3 opacity-75">
+                                    <i class="far fa-lightbulb fa-2x"></i>
+                                </div>
+                                <h5 class="mb-2">Nitrogen Tip</h5>
+                                <p class="mb-0 small opacity-90 lh-base">"Apply nitrogen in split doses for better rice
+                                    yield. Next application recommended in 2 days."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Tab -->
+                <div class="tab-pane fade" id="chat-section">
+                    <div class="chat-container">
+                        <!-- Messages -->
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Bots Greeting -- Use a cleaner greeting -->
+                            <div class="text-center my-5">
+                                <img src="/static/img/logo.png" width="60" class="mb-3 opacity-75">
+                                <h3 class="fw-bold opacity-75">How can I help you today?</h3>
+                            </div>
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="chat-input-area">
+                            <div class="chat-input-wrapper">
+                                <div class="input-container glass-input">
+                                    <button class="input-action-btn" id="attach-btn" title="Attach Image">
+                                        <i class="fas fa-paperclip"></i>
+                                    </button>
+                                    <textarea class="chat-input-premium" id="user-input" rows="1"
+                                placeholder="Ask Chisa anything..." data-i18n="chat.placeholder" autocomplete="off"></textarea>
+                                    <button class="input-action-btn" id="voice-btn" title="Voice Input">
+                                        <i class="fas fa-microphone"></i>
+                                    </button>
+                                    <button class="send-btn-modern" id="send-btn">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                <input type="file" id="chat-file-input" class="d-none" accept="image/*">
+                            </div>
+                            <div class="text-center mt-2">
+                                <small class="text-muted" style="font-size: 0.7rem;">Chisa AI can make mistakes.
+                                    Consider checking important info.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plant Vision Tab — Advanced -->
+                <div class="tab-pane fade" id="disease-section">
+
+                    <!-- ── 4 Advanced Stat Cards ── -->
+                    <div class="vision-stats-grid mb-4">
+                        <div class="vision-stat-card" id="v-severity">
+                            <div class="vision-stat-icon bg-soft-red"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="vision-stat-info">
+                                <div class="vision-card-value">—</div>
+                                <div class="vision-card-label">Severity</div>
+                            </div>
+                            <span class="vision-chip vision-chip-neutral">Waiting…</span>
+                        </div>
+                        <div class="vision-stat-card" id="v-pathogen">
+                            <div class="vision-stat-icon bg-soft-purple"><i class="fas fa-virus"></i></div>
+                            <div class="vision-stat-info">
+                                <div class="vision-card-value">—</div>
+                                <div class="vision-card-label">Pathogen Type</div>
+                            </div>
+                            <span class="vision-chip vision-chip-neutral">Waiting…</span>
+                        </div>
+                        <div class="vision-stat-card" id="v-stage">
+                            <div class="vision-stat-icon bg-soft-orange"><i class="fas fa-chart-line"></i></div>
+                            <div class="vision-stat-info">
+                                <div class="vision-card-value">—</div>
+                                <div class="vision-card-label">Disease Stage</div>
+                            </div>
+                            <span class="vision-chip vision-chip-neutral">Waiting…</span>
+                        </div>
+                        <div class="vision-stat-card" id="v-spread-risk">
+                            <div class="vision-stat-icon bg-soft-blue"><i class="fas fa-broadcast-tower"></i></div>
+                            <div class="vision-stat-info">
+                                <div class="vision-card-value">—</div>
+                                <div class="vision-card-label">Spread Risk</div>
+                            </div>
+                            <span class="vision-chip vision-chip-neutral">Waiting…</span>
+                        </div>
+                    </div>
+
+                    <!-- ── Main Split Layout ── -->
+                    <div class="vision-advanced-split">
+
+                        <!-- Left: Upload + Progression -->
+                        <div class="vision-left-panel">
+
+                            <!-- Upload Zone -->
+                            <div class="upload-zone" id="upload-zone">
+                                <input type="file" id="disease-file-input" class="d-none" accept="image/*">
+                                <div class="upload-content text-center">
+                                    <div class="mb-3">
+                                        <div class="vision-upload-icon-wrap">
+                                            <i class="fas fa-microscope fa-2x text-success"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="fw-bold mb-1" data-i18n="vision.title">Plant Diagnosis</h5>
+                                    <p class="text-secondary small mb-3" style="max-width:240px;margin:0 auto">
+                                        Advanced AI — 8-feature deep scan
+                                    </p>
+                                    <!-- Feature Pills -->
+                                    <div class="vision-feature-pills mb-3">
+                                        <span class="vpill"><i class="fas fa-search-plus me-1"></i>Early Detection</span>
+                                        <span class="vpill"><i class="fas fa-layer-group me-1"></i>Multi-Disease</span>
+                                        <span class="vpill"><i class="fas fa-dna me-1"></i>Pathogen Type</span>
+                                        <span class="vpill"><i class="fas fa-signal me-1"></i>Spread Risk</span>
+                                    </div>
+                                    <button class="btn btn-primary-custom px-4 shadow-sm"
+                                        onclick="document.getElementById('disease-file-input').click()">
+                                        <i class="fas fa-upload me-2"></i><span data-i18n="vision.selectImage">Select Image</span>
+                                    </button>
+                                    <p class="text-muted small mt-2">or drag &amp; drop here</p>
+                                </div>
+                                <div id="image-preview-container" class="mt-3 d-none w-100 text-center">
+                                    <img id="preview-img" src="" class="vision-preview-img" alt="Plant preview">
+                                    <div class="mt-3 d-flex justify-content-center gap-2">
+                                        <button class="btn btn-success px-4" id="analyze-btn">
+                                            <i class="fas fa-microscope me-2"></i><span data-i18n="vision.analyze">Run Analysis</span>
+                                        </button>
+                                        <button class="btn btn-outline-danger" id="clear-img-btn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Disease Progression Tracker -->
+                            <div class="vision-progress-card mt-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-semibold" style="font-size:0.85rem">
+                                        <i class="fas fa-chart-area me-2 text-success"></i>Disease Progression
+                                    </span>
+                                    <span class="badge vision-badge-model">Stage Tracker</span>
+                                </div>
+                                <div class="vision-stage-labels">
+                                    <span>Healthy</span><span>Mild</span><span>Moderate</span><span>Severe</span><span>Critical</span>
+                                </div>
+                                <div class="progress vision-progress-track" role="progressbar">
+                                    <div class="progress-bar vision-progress-fill"
+                                        id="disease-progress-bar"
+                                        style="width:0%; background:#e5e7eb"
+                                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="vision-progress-label mt-1" id="disease-progress-label">
+                                    Awaiting scan…
+                                </div>
+                            </div>
+
+                            <!-- Spread Risk Ring -->
+                            <div class="vision-spread-card mt-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="vision-ring-wrap">
+                                        <svg width="88" height="88" viewBox="0 0 88 88">
+                                            <circle cx="44" cy="44" r="36" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                                            <circle cx="44" cy="44" r="36" fill="none" stroke="#e5e7eb" stroke-width="8"
+                                                id="spread-risk-ring"
+                                                stroke-linecap="round"
+                                                transform="rotate(-90 44 44)"
+                                                style="stroke-dasharray:226;stroke-dashoffset:226;transition:all 1s ease"/>
+                                        </svg>
+                                        <div class="vision-ring-center">
+                                            <div class="ring-pct" id="spread-risk-pct">—</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="fw-bold" style="font-size:0.9rem">
+                                            <i class="fas fa-broadcast-tower me-2 text-danger"></i>Spread Risk
+                                        </div>
+                                        <div class="text-secondary small" id="spread-risk-label">Not scanned yet</div>
+                                        <div class="text-muted" style="font-size:0.72rem">Neighboring plant risk</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Results Panel -->
+                        <div class="results-panel vision-results-panel">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold m-0">
+                                    <i class="fas fa-clipboard-check me-2 text-success"></i>
+                                    <span data-i18n="vision.report">Advanced Report</span>
+                                </h5>
+                                <span class="badge vision-badge-model">Groq · Llama-4 Vision</span>
+                            </div>
+
+                            <!-- Capability badges -->
+                            <div class="vision-capability-strip mb-3">
+                                <span class="vcap-badge"><i class="fas fa-eye me-1"></i>Early Detection</span>
+                                <span class="vcap-badge"><i class="fas fa-clone me-1"></i>Multi-Disease</span>
+                                <span class="vcap-badge"><i class="fas fa-dna me-1"></i>Pathogen</span>
+                                <span class="vcap-badge"><i class="fas fa-search me-1"></i>Root Cause</span>
+                                <span class="vcap-badge"><i class="fas fa-wifi me-1"></i>Spread Risk</span>
+                            </div>
+
+                            <div id="disease-result">
+                                <div class="text-center text-secondary py-5">
+                                    <i class="fas fa-leaf fa-3x mb-3 opacity-25"></i>
+                                    <p class="lead small" data-i18n="vision.waiting">Upload a plant photo to begin analysis</p>
+                                    <div class="vision-capability-list mt-3">
+                                        <div class="vcap-item"><i class="fas fa-check-circle text-success me-2"></i>Early-stage disease detection</div>
+                                        <div class="vcap-item"><i class="fas fa-check-circle text-success me-2"></i>Multi-disease scan in one image</div>
+                                        <div class="vcap-item"><i class="fas fa-check-circle text-success me-2"></i>Fungal / Bacterial / Viral classifier</div>
+                                        <div class="vcap-item"><i class="fas fa-check-circle text-success me-2"></i>Root cause &amp; spread prediction</div>
+                                        <div class="vcap-item"><i class="fas fa-check-circle text-success me-2"></i>QR report per infected plant</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QR Code Modal -->
+                    <div class="modal fade" id="vision-qr-modal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content" style="border-radius:20px;border:none">
+                                <div class="modal-header border-0 pb-0">
+                                    <h5 class="modal-title fw-bold" id="qrModalLabel">
+                                        <i class="fas fa-qrcode me-2 text-success"></i>Plant Report QR Code
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body text-center py-4">
+                                    <div class="qr-card mx-auto mb-3">
+                                        <img id="qr-code-img" src="" alt="QR Code" class="qr-img" width="200" height="200">
+                                    </div>
+                                    <p class="text-secondary small mb-3">Scan this QR code to access the plant disease report</p>
+                                    <div class="qr-info-strip">
+                                        <span><i class="fas fa-calendar me-1"></i>${new Date().toLocaleDateString()}</span>
+                                        <span><i class="fas fa-robot me-1"></i>Groq Vision AI</span>
+                                        <span><i class="fas fa-leaf me-1"></i>Chisa AI</span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0 pt-0 justify-content-center gap-2">
+                                    <button class="btn btn-success px-4" onclick="Vision.downloadReport()">
+                                        <i class="fas fa-download me-2"></i>Download JSON Report
+                                    </button>
+                                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- ✅ Soil Image Analysis Tab -->
+                <div class="tab-pane fade" id="soil-section">
+                    <!-- 4 Quick-Stat Cards -->
+                    <div class="soil-stats-grid mb-4">
+
+                        <div class="soil-stat-card" id="soil-type-card">
+                            <div class="soil-stat-icon bg-soft-brown">
+                                <i class="fas fa-layer-group"></i>
+                            </div>
+                            <div class="soil-stat-info">
+                                <div class="soil-stat-value">—</div>
+                                <div class="soil-stat-label">Soil Type</div>
+                            </div>
+                            <span class="soil-chip soil-chip-neutral">Waiting…</span>
+                        </div>
+
+                        <div class="soil-stat-card" id="organic-card">
+                            <div class="soil-stat-icon bg-soft-green">
+                                <i class="fas fa-seedling text-success"></i>
+                            </div>
+                            <div class="soil-stat-info">
+                                <div class="soil-stat-value">—</div>
+                                <div class="soil-stat-label">Organic Matter</div>
+                            </div>
+                            <span class="soil-chip soil-chip-neutral">Waiting…</span>
+                        </div>
+
+                        <div class="soil-stat-card" id="erosion-card">
+                            <div class="soil-stat-icon bg-soft-orange">
+                                <i class="fas fa-water text-warning"></i>
+                            </div>
+                            <div class="soil-stat-info">
+                                <div class="soil-stat-value">—</div>
+                                <div class="soil-stat-label">Erosion / Degradation</div>
+                            </div>
+                            <span class="soil-chip soil-chip-neutral">Waiting…</span>
+                        </div>
+
+                        <div class="soil-stat-card" id="moisture-card">
+                            <div class="soil-stat-icon bg-soft-blue">
+                                <i class="fas fa-tint text-info"></i>
+                            </div>
+                            <div class="soil-stat-info">
+                                <div class="soil-stat-value">—</div>
+                                <div class="soil-stat-label">Moisture Level</div>
+                            </div>
+                            <span class="soil-chip soil-chip-neutral">Waiting…</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Upload + Result Split -->
+                    <div class="soil-analysis-split">
+
+                        <!-- Left: Upload Zone -->
+                        <div class="soil-upload-panel">
+                            <div class="soil-upload-zone" id="soil-upload-zone">
+                                <input type="file" id="soil-file-input" class="d-none" accept="image/*">
+
+                                <!-- Placeholder -->
+                                <div id="soil-upload-placeholder" class="text-center">
+                                    <div class="soil-upload-icon mb-3">
+                                        <div class="soil-icon-bg">
+                                            <i class="fas fa-mountain fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <h5 class="fw-bold mb-2">Soil Image Analysis</h5>
+                                    <p class="text-secondary small mb-4" style="max-width:280px;margin:0 auto">
+                                        Upload a field or soil photo. AI detects <strong>soil type</strong>,
+                                        <strong>organic matter</strong>, <strong>erosion</strong> &amp;
+                                        <strong>moisture level</strong>.
+                                    </p>
+                                    <div class="d-flex flex-column gap-2 mb-4 text-start px-3">
+                                        <div class="soil-feature-pill"><i class="fas fa-check-circle text-success me-2"></i>Clay · Loam · Sandy · Black Soil detection</div>
+                                        <div class="soil-feature-pill"><i class="fas fa-check-circle text-success me-2"></i>Soil colour → organic matter estimate</div>
+                                        <div class="soil-feature-pill"><i class="fas fa-check-circle text-success me-2"></i>Erosion &amp; degradation detection</div>
+                                        <div class="soil-feature-pill"><i class="fas fa-check-circle text-success me-2"></i>Crack pattern → moisture level</div>
+                                    </div>
+                                    <button class="btn soil-upload-btn px-5"
+                                        onclick="document.getElementById('soil-file-input').click()">
+                                        <i class="fas fa-upload me-2"></i>Select Photo
+                                    </button>
+                                    <p class="text-muted small mt-3">or drag &amp; drop here</p>
+                                </div>
+
+                                <!-- Preview -->
+                                <div id="soil-preview-container" class="d-none w-100 text-center">
+                                    <img id="soil-preview-img" src="" class="soil-preview-img" alt="Soil preview">
+                                    <div class="mt-3 d-flex justify-content-center gap-2">
+                                        <button class="btn soil-analyze-btn" id="soil-analyze-btn">
+                                            <i class="fas fa-microscope me-2"></i>Analyse Soil
+                                        </button>
+                                        <button class="btn btn-outline-danger" id="soil-clear-btn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Results Panel -->
+                        <div class="soil-results-panel">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="fw-bold m-0">
+                                    <i class="fas fa-flask me-2 text-amber"></i>Analysis Report
+                                </h4>
+                                <span class="badge soil-badge-model">Groq · Llama-4 Vision</span>
+                            </div>
+                            <div id="soil-result">
+                                <div class="text-center text-secondary py-5">
+                                    <i class="fas fa-mountain fa-3x mb-3 opacity-25"></i>
+                                    <p class="lead small">Upload a soil or field photo to begin analysis</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Soil Tab -->
+                <div class="tab-pane fade" id="calendar-section">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="mb-4 text-success fw-bold">Crop Calendar Generator</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="bg-light p-4 rounded h-100">
+                                    <form id="crop-calendar-form" class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Crop</label>
+                                            <input type="text" class="form-control" id="crop-type"
+                                                placeholder="Enter crop name (e.g. Rice, Tomato)" required>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <button type="submit" class="btn btn-primary-custom w-100">
+                                                Generate Calendar
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="calendar-result"
+                                    class="p-4 bg-white border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fas fa-calendar-alt fa-3x text-secondary opacity-25 mb-3"></i>
+                                    <div class="text-muted">Select a crop to view the schedule</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Irrigation Section -->
+                <div class="tab-pane fade" id="irrigation-section">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="mb-4 text-success fw-bold">Smart Irrigation Guide</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="bg-light p-4 rounded h-100">
+                                    <form id="irrigation-guide-form" class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Crop</label>
+                                            <input type="text" class="form-control" id="irrigation-crop"
+                                                placeholder="Enter crop (e.g. Rice)" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Soil Condition</label>
+                                            <select class="form-select" id="soil-type" required>
+                                                <option value="">Select Soil...</option>
+                                                <option value="clay">Clay (Heavy)</option>
+                                                <option value="sandy">Sandy (Light)</option>
+                                                <option value="loam">Loam (Medium)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <button type="submit" class="btn btn-primary-custom w-100">Get
+                                                Recommendation</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="irrigation-result"
+                                    class="p-4 bg-white border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fas fa-tint fa-3x text-secondary opacity-25 mb-3"></i>
+                                    <div class="text-muted">Fill details for irrigation plan</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Natural Fertilizers Section -->
+                <div class="tab-pane fade" id="fertilizer-section">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="mb-4 text-success fw-bold">Natural / Organic Fertilizer Guide</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="bg-light p-4 rounded h-100">
+                                    <form id="fertilizer-guide-form" class="row g-3">
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Crop</label>
+                                            <input type="text" class="form-control" id="fertilizer-crop"
+                                                placeholder="e.g. Rice, Wheat, Tomato" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Soil Type / Condition</label>
+                                            <select class="form-select" id="fertilizer-soil">
+                                                <option value="">Select soil...</option>
+                                                <option value="clay">Clay (heavy, water holding)</option>
+                                                <option value="sandy">Sandy (light, low holding)</option>
+                                                <option value="loam">Loam (balanced)</option>
+                                                <option value="black soil">Black soil</option>
+                                                <option value="red soil">Red soil</option>
+                                                <option value="upland / dryland">Upland / dryland</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Main Goal</label>
+                                            <select class="form-select" id="fertilizer-goal">
+                                                <option value="">Select goal...</option>
+                                                <option value="increase yield with fully natural inputs">Increase yield (fully natural)</option>
+                                                <option value="improve soil organic matter and long term soil health">Improve soil health</option>
+                                                <option value="reduce chemical fertilizer use and move to organic production">Reduce chemicals</option>
+                                                <option value="manage nutrient deficiency and crop yellowing using organic sources only">Manage nutrient deficiency</option>
+                                                <option value="residue-free production for safe food">Residue-free production</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Location / Region (optional)</label>
+                                            <input type="text" class="form-control" id="fertilizer-region"
+                                                placeholder="e.g. Punjab, Tamil Nadu, Maharashtra">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-bold">Field Notes (optional)</label>
+                                            <textarea class="form-control" id="fertilizer-notes" rows="3"
+                                                placeholder="Describe problems (yellowing, poor growth, low yield, etc.)"></textarea>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <button type="submit" class="btn btn-primary-custom w-100">
+                                                Get Organic Fertilizer Plan
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="fertilizer-result"
+                                    class="p-4 bg-white border rounded h-100 d-flex flex-column justify-content-center align-items-center">
+                                    <i class="fas fa-seedling fa-3x text-secondary opacity-25 mb-3"></i>
+                                    <div class="text-muted text-center">
+                                        Get a crop-specific organic fertilizer schedule with doses, timing,
+                                        and a small reference list of common natural fertilizers.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Section -->
+                <div class="tab-pane fade" id="market-section">
+                    <div class="card border-0 shadow-sm p-4">
+                        <h4 class="mb-4 text-success fw-bold">Live Market Prices</h4>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bg-light p-3 rounded mb-3">
+                                    <form id="market-prices-form" class="row g-3 align-items-end">
+                                        <div class="col-md-4">
+                                            <label class="form-label small text-uppercase">Crop</label>
+                                            <input type="text" class="form-control" id="market-crop"
+                                                placeholder="Enter crop name" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label small text-uppercase">location</label>
+                                            <input type="text" class="form-control" id="district"
+                                                placeholder="Enter location" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="submit" class="btn btn-primary-custom w-100">Check
+                                                Prices</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="market-result" class="mt-4 p-4 border rounded min-h-200">
+                                    <div class="text-center text-muted">
+                                        <i class="fas fa-chart-line mb-2"></i>
+                                        <p>Real-time market analytics</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">⚙️ App Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">OpenAI API Key</label>
+                        <input type="password" class="form-control" id="api-key-input" placeholder="sk-..."
+                            autocomplete="off">
+                        <div class="form-text small text-muted">
+                            <i class="fas fa-lock me-1"></i> Stored securely in your browser's LocalStorage.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="save-api-key">Save & Reload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Mobile Sidebar Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const openBtn = document.getElementById('open-sidebar');
+            const closeBtn = document.getElementById('close-sidebar');
+
+            function openSidebar() {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            if (openBtn) openBtn.addEventListener('click', openSidebar);
+            if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+            if (overlay) overlay.addEventListener('click', closeSidebar);
+
+            // Close sidebar when a nav link is clicked (mobile)
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 992) closeSidebar();
+                });
+            });
+        });
+    </script>
+
+    <script type="module" src="/static/js/main.js"></script>
+</body>
+
+</html>

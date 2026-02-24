@@ -1,0 +1,10 @@
+plant vision future add now in groq api (Advanced)
+
+Early-stage disease detection (before visible symptoms)
+Multi-disease detection in a single leaf scan
+Disease progression tracker (mild → severe stages)
+Fungal vs bacterial vs viral disease classifier
+Root cause analysis (why did disease occur?)
+Disease spread risk prediction to neighboring plants
+Real-time disease outbreak heatmap across region
+QR code report generation per infected plant
