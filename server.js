@@ -12,7 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configuration
-const GROQ_API_KEY = process.env.GROQ_API_KEY || "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";
+const GROQ_API_KEY = process.env.GROQ_API_KEY || "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";
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY || "500889e3ed8865441bbfb67e99b9a412";
 const PRIMARY_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
 const VISION_MODEL = "meta-llama/llama-4-scout-17b-16e-instruct";
@@ -375,4 +375,5 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
